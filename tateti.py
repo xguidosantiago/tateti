@@ -14,13 +14,14 @@ BOLD = "\033[1m"
 REG = "\033[0m"
 
 
-turno = 0
-tablero = [["1","2","3"],["4","5","6"],["7","8","9"]]
+
 
 def default():
-    
     tablero = [["1","2","3"],["4","5","6"],["7","8","9"]]
     return tablero
+
+turno = 0
+tablero = default()
 
 def imprimirTablero(tablero):
     os.system("cls")
@@ -68,8 +69,6 @@ def marcar(tablero):
     return tablero
 
 
-        
-    
 def tateti(marcado):
     usuario = 0
     maquina = 0
@@ -109,12 +108,12 @@ def tateti(marcado):
     else:
         return False
     
-def turnoMaquina(marcado):
+def turnoMaquina(tablero):
     pos = random.randint(1,9)
     for i in range(1,4):
         if pos == i:
             if "X" in tablero[0][i-1] or "O" in tablero[0][i-1]:
-                turnoMaquina(marcado)
+                turnoMaquina(tablero)
             else:
                 print(f"\nturno de la maquina: {i}")
                 tablero[0][i-1] = "O"
@@ -122,7 +121,7 @@ def turnoMaquina(marcado):
     for i in range(4,7):
             if pos == i:
                 if "X" in tablero[1][i-4] or "O" in tablero[1][i-4]:
-                    turnoMaquina(marcado)
+                    turnoMaquina(tablero)
                 else:
                     print(f"\nturno de la maquina: {i}")
                     tablero[1][i-4] = "O"
@@ -130,7 +129,7 @@ def turnoMaquina(marcado):
     for i in range(7,10):
             if pos == i:
                 if "X" in tablero[2][i-7] or "O" in tablero[2][i-7]:
-                    turnoMaquina(marcado)
+                    turnoMaquina(tablero)
                 else:
                     print(f"\nturno de la maquina: {i}")
                     tablero[2][i-7] = "O"
@@ -158,9 +157,23 @@ def jugar(turno):
             jugar(turno)
         else:
             print(f"{GREEN}{BOLD}\nempate{REG}")    
-       
-imprimirTablero(tablero)
-jugar(turno)
+    
+    if condicion != estado:
+         again = int(input("jugar de nuevo? 1: si - 2: no: "))
+         if again == 1:
+              iniciar()
+         else:
+            quit()
+            
+
+def iniciar():
+    global tablero, turno
+    tablero = default()
+    turno = 0
+    imprimirTablero(tablero)
+    jugar(turno)
+
+iniciar()
 
 
 
