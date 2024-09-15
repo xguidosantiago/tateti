@@ -13,7 +13,9 @@ END = "\033[0m"
 BOLD = "\033[1m"
 REG = "\033[0m"
 
-
+def validarInput(entrada):
+     patron = "^[1-9]$"
+     return bool(re.match(patron, entrada))
 
 
 def default():
@@ -40,34 +42,39 @@ def imprimirTablero(tablero):
 
 
 def marcar(tablero):
-    pos = int(input("\ningrese posicion para marcar: "))
-    condicion = not True
+    while True: 
+        pos = int(input("\ningrese posicion para marcar: "))
+        
+        if validarInput(str(pos)) == True:
 
-    for i in range(1,4):
-        if pos == i:
-            if "X" in tablero[0][i-1] or "O" in tablero[0][i-1]:
-                print(f"{RED}el casillero ya se encuentra marcado!{REG}")
-                time.sleep(1)
-            else:
-                tablero[0][i-1] = "X"
+            for i in range(1,4):
+                if pos == i:
+                    if "X" in tablero[0][i-1] or "O" in tablero[0][i-1]:
+                        print(f"{RED}el casillero ya se encuentra marcado!{REG}")
+                        time.sleep(1)
+                    else:
+                        tablero[0][i-1] = "X"
 
-    for i in range(4,7):
-            if pos == i:
-                if "X" in tablero[1][i-4] or "O" in tablero[1][i-4]:
-                    print(f"{RED}el casillero ya se encuentra marcado!{REG}")
-                    time.sleep(1)
-                else:
-                    tablero[1][i-4] = "X"
+            for i in range(4,7):
+                    if pos == i:
+                        if "X" in tablero[1][i-4] or "O" in tablero[1][i-4]:
+                            print(f"{RED}el casillero ya se encuentra marcado!{REG}")
+                            time.sleep(1)
+                        else:
+                            tablero[1][i-4] = "X"
 
-    for i in range(7,10):
-            if pos == i:
-                if "X" in tablero[2][i-7] or "O" in tablero[2][i-7]:
-                    print(f"{RED}el casillero ya se encuentra marcado!{REG}")
-                    time.sleep(1)
-                else:
-                    tablero[2][i-7] = "X"
-    return tablero
+            for i in range(7,10):
+                    if pos == i:
+                        if "X" in tablero[2][i-7] or "O" in tablero[2][i-7]:
+                            print(f"{RED}el casillero ya se encuentra marcado!{REG}")
+                            time.sleep(1)
+                        else:
+                            tablero[2][i-7] = "X"
+        else:
+            input("numero no valido, intente nuevamente")
+            marcar(tablero)
 
+        return tablero
 
 def tateti(marcado):
     usuario = 0
@@ -159,12 +166,13 @@ def jugar(turno):
             print(f"{GREEN}{BOLD}\nempate{REG}")    
     
     if condicion != estado:
-         again = int(input("jugar de nuevo? 1: si - 2: no: "))
-         if again == 1:
-              iniciar()
-         else:
+        again = int(input("jugar de nuevo? 1: si - 2: no: "))
+        if again == 1:
+            iniciar()
+        else:
             quit()
-            
+
+    
 
 def iniciar():
     global tablero, turno
