@@ -42,35 +42,37 @@ def imprimirTablero(tablero):
 
 
 def marcar(tablero):
-    while True: 
-        pos = int(input("\ningrese posicion para marcar: "))
-        
-        if validarInput(str(pos)) == True:
+    pos = int(input("\ningrese posicion para marcar: "))
+    
+    if validarInput(str(pos)) == True:
 
-            for i in range(1,4):
+        for i in range(1,4):
+            if pos == i:
+                if "X" in tablero[0][i-1] or "O" in tablero[0][i-1]:
+                    input(f"{RED}el casillero ya se encuentra marcado!{REG}")
+                    marcar(tablero)
+                else:
+                    tablero[0][i-1] = "X"
+
+        for i in range(4,7):
                 if pos == i:
-                    if "X" in tablero[0][i-1] or "O" in tablero[0][i-1]:
+                    if "X" in tablero[1][i-4] or "O" in tablero[1][i-4]:
                         input(f"{RED}el casillero ya se encuentra marcado!{REG}")
+                        marcar(tablero)
                     else:
-                        tablero[0][i-1] = "X"
+                        tablero[1][i-4] = "X"
+        for i in range(7,10):
+                if pos == i:
+                    if "X" in tablero[2][i-7] or "O" in tablero[2][i-7]:
+                        input(f"{RED}el casillero ya se encuentra marcado!{REG}")
+                        marcar(tablero)
+                    else:
+                        tablero[2][i-7] = "X"
+    else:
+        input("numero no valido, intente nuevamente")
+        marcar(tablero)
 
-            for i in range(4,7):
-                    if pos == i:
-                        if "X" in tablero[1][i-4] or "O" in tablero[1][i-4]:
-                            input(f"{RED}el casillero ya se encuentra marcado!{REG}")
-                        else:
-                            tablero[1][i-4] = "X"
-            for i in range(7,10):
-                    if pos == i:
-                        if "X" in tablero[2][i-7] or "O" in tablero[2][i-7]:
-                            input(f"{RED}el casillero ya se encuentra marcado!{REG}")
-                        else:
-                            tablero[2][i-7] = "X"
-        else:
-            input("numero no valido, intente nuevamente")
-            marcar(tablero)
-
-        return tablero
+    return tablero
 
 def tateti(marcado):
     usuario = 0
